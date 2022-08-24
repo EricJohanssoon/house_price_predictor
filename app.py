@@ -38,10 +38,11 @@ def home():
 
 def retrieve_data(url):
     
-    print(type(str(url[0])))
     # retrieving relevant values from the url
     html_page = requests.get(str(url[0]))
+    print(html_page)
     soup = BeautifulSoup(html_page.text, 'html.parser')
+    # print(soup)
     select = soup.find('div', class_="_2IyrD _36W0F _16dH_")
 
     name = select.find('h1').text
@@ -92,7 +93,6 @@ def predict():
     url_array = [np.array(int_features)]  #Convert to the form [[a, b]] for input to the model
     url=url_array[0]
     name, output = retrieve_data(url)
-    print(name)
 
     # output = url
     #print(output[0], type(output[0]))

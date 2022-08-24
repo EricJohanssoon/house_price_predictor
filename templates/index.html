@@ -23,7 +23,7 @@
       <!-- Action is where the data is sent. In our case, predict page.
       If action is omitted, it assumed to be the current page -->
       <form action="{{ url_for('predict')}}"method="post"class="search-bar">
-        <input type="text" name="hemnet link" placeholder="Paste link from Hemnet" required="required" class="searchTerm" /><br>
+        <input type="text" name="hemnet link" placeholder="Paste link from Booli" required="required" class="searchTerm" /><br>
           <button type="submit" class="searchButton"> Press here:)</button></p>
       </form>
 
@@ -33,7 +33,13 @@
       {{ apartment_info }} </h4>
     <h4 style="color:rgb(255, 255, 255);">
     {{ prediction_text }} </h4>
+    <h4 style="color:rgb(255, 255, 255);">
+    Learn more about this project on my
+      <a href="https://github.com/EricJohanssoon" class="button-20"> Github </a>
+  
+    </h4>
 
+    
   </div>
 
 
