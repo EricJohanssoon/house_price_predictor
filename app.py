@@ -17,6 +17,7 @@ from flask import Flask, request, render_template
 from bs4 import BeautifulSoup
 import pandas as pd
 import json
+import os
 
 #Create an app object using the Flask class. 
 app = Flask(__name__)
@@ -109,5 +110,7 @@ def predict():
 #If we import this file (module) to another file then __name__ == app (which is the name of this python file).
 
 if __name__ == "__main__":
-    app.run()
-    app.run(host="0.0.0.0") #to run on localhost
+    app.run(
+    host=os.getenv('LISTEN', '0.0.0.0'),
+    port=int(os.getenv('PORT', '8080'))
+)
