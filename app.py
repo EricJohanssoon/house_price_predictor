@@ -15,12 +15,13 @@ import requests
 from flask import Flask, request, render_template
 from bs4 import BeautifulSoup
 import pandas as pd
+import json
 
 #Create an app object using the Flask class. 
 app = Flask(__name__)
 
 #Load the trained model. (Pickle file)
-model = pickle.load(open('models/model.pkl', 'rb'))
+model = pickle.load(open('models/rf_regressor.pkl', 'rb'))
 
 #Define the route to be home. 
 #The decorator below links the relative route of the URL to the function it is decorating.
@@ -41,60 +42,41 @@ def retrieve_data(url):
     soup = BeautifulSoup(html_page.text, 'html.parser')
     select = soup.find('div', class_="_2IyrD _36W0F _16dH_")
 
-    name = select.find('h1').text
-    price = select.find('h2').text
+    # name = select.find('h1').text
+    # price = select.find('h2').text
     size_and_area = select.findAll('h4')
     size = size_and_area[0].text
     area = size_and_area[1].text
 
-    return name
-    # # extracting name, price, size and area from left infobox.
-    # name = infobox_2.find('h1').text
-    # price = infobox_2.find('h2').text
-    # size_and_area = infobox_2.findAll('h4')
-    # size = size_and_area[0].text
-    # area = size_and_area[1].text
+    # split up size into size and #rooms
+    size_and_rooms = size.replace('½', '.5').split(',')
+    if len(size_and_rooms) > 1:
+        size = float(size_and_rooms[0].split(' ')[0])
+        rooms = float(size_and_rooms[1].split('rum')[0])
+    else:
+        size = int(size_and_rooms[0].split(' ')[0])
+        rooms = 'N/A'
 
-    # # extracting asking price
-    # try:
-    #     asking_price_div = infobox_1.select('div:contains("Utropspris")')[0]
-    #     asking_price = asking_price_div.find('div', class_="_18w8g").text
-    #     # print(asking_price, '\n')
-    # except:
-    #     asking_price = 'N/A'
-    #     # print('No asking price')
-    #     # print('\n')
+    # split up area into area and house type
+    area_and_house_type = area.split(',')
+    area = area_and_house_type[1]
 
-    # lst = [name, price, size, area, asking_price, url]
-    # df = pd.DataFrame(columns=['name', 'price', 'size', 'area', 'asking_price', 'url'])
-    # df.loc[0] = lst
+    # load local json file
+    with open('files_for_training_model/average_price_in_area.json') as f:
+        average_price_in_area = json.load(f)
 
-    # def clean_data(row):
+
+    df = pd.DataFrame(columns=['size', 'rooms','area'])
+    df.loc[0] = [size, rooms, area]
+    df
+    # apply lambda function to df to get average price per m2 for each area
+    df['area_price_per_m2'] = df.apply(lambda row: average_price_in_area[row['area']][0], axis=1)
     
-    #     # convert price to int and delete ' kr'
-    #     row['price'] = int(row['price'].replace(' kr', '').replace(' ', ''))
+    prediction = model.predict(df[['size', 'rooms', 'area_price_per_m2']])
+    print(prediction)
 
-    #     # split up size into size and #rooms
-    #     size_and_rooms = row['size'].replace('½', '.5').split(',')
-    #     if len(size_and_rooms) > 1:
-    #         row['size'] = float(size_and_rooms[0].split(' ')[0])
-    #         row['rooms'] = float(size_and_rooms[1].split('rum')[0])
-    #     else:
-    #         row['size'] = int(size_and_rooms[0].split(' ')[0])
-    #         row['rooms'] = 'N/A'
 
-    #     # split up area into area and house type
-    #     area_and_house_type = row['area'].split(',')
-    #     row['area'] = area_and_house_type[1]
-    #     row['type'] = area_and_house_type[0]
-
-    #     return row
-
-    # df = df.apply(clean_data, axis=1)
-    # prediction = model.predict(df.loc[0])  # features Must be in the form [[a, b]]
-    # prediction = model.predict([[0.12,0.12]])  # features Must be in the form [[a, b]]
-    # output = round(prediction[0], 2)
-    #return df
+    return int(prediction[0])
 
 #You can use the methods argument of the route() decorator to handle different HTTP methods.
 #GET: A GET message is send, and the server returns data
