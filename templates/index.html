@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html >
-<head>
-  <meta charset="UTF-8">
-  
-  <!-- Make it compatible to mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>House Price Prediction</title>
-  
-</head>
+  <head>
+    <meta charset="UTF-8">
+    
+    <!-- Make it compatible to mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      h1 {text-align: center;font-family: Helvetica; padding-top: 2em; padding-bottom: 1em;}
+      h4 {text-align: center;font-family: Helvetica}
+      p {text-align: center;font-family: Helvetica}
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- <link rel="stylesheet" href="../static/styles.css"> -->
+    <title>House Price Prediction</title>
+    
+  </head>
 
-<body style="background: #000;">
- <div class="login">
-	<h1 style="color:Violet;">House Price prediction</h1>
+  <body style="background: #000;">
+  <div class="login">
+    <h1 style="color:rgb(255, 255, 255);">House Price Prediction</h1>
 
-     <!-- Action is where the data is sent. In our case, predict page.
-     If action is omitted, it assumed to be the current page -->
-    <form action="{{ url_for('predict')}}"method="post">
-    	<input type="text" name="hemnet link" placeholder="Paste link from Hemnet" required="required" /><br>
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict percent population using Machine Learning :)</button></p>
-    </form>
+      <!-- Action is where the data is sent. In our case, predict page.
+      If action is omitted, it assumed to be the current page -->
+      <form action="{{ url_for('predict')}}"method="post"class="search-bar">
+        <input type="text" name="hemnet link" placeholder="Paste link from Hemnet" required="required" class="searchTerm" /><br>
+          <button type="submit" class="searchButton"> Press here:)</button></p>
+      </form>
 
-   <br>
-   <br>
-   <h4 style="color:Violet;">
-   {{ prediction_text }} </h4>
+    <br>
+    <br>
+    <h4 style="color:rgb(255, 255, 255);">
+      {{ apartment_info }} </h4>
+    <h4 style="color:rgb(255, 255, 255);">
+    {{ prediction_text }} </h4>
 
- </div>
+  </div>
 
 
-</body>
+  </body>
 </html>

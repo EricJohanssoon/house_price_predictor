@@ -42,7 +42,7 @@ def retrieve_data(url):
     soup = BeautifulSoup(html_page.text, 'html.parser')
     select = soup.find('div', class_="_2IyrD _36W0F _16dH_")
 
-    # name = select.find('h1').text
+    name = select.find('h1').text
     # price = select.find('h2').text
     size_and_area = select.findAll('h4')
     size = size_and_area[0].text
@@ -76,7 +76,7 @@ def retrieve_data(url):
     print(prediction)
 
 
-    return int(prediction[0])
+    return name, int(prediction[0])
 
 #You can use the methods argument of the route() decorator to handle different HTTP methods.
 #GET: A GET message is send, and the server returns data
@@ -89,13 +89,14 @@ def predict():
     int_features = [str(x) for x in request.form.values()] #Convert string inputs to float.
     url_array = [np.array(int_features)]  #Convert to the form [[a, b]] for input to the model
     url=url_array[0]
-    output = retrieve_data(url)
+    name, output = retrieve_data(url)
+    print(name)
 
     # output = url
     #print(output[0], type(output[0]))
     #output = round(prediction[0], 2)
 
-    return render_template('index.html', prediction_text='The inputed URL is {}'.format(output))
+    return render_template('index.html', apartment_info='The apartment is located in {}'.format(name), prediction_text='and the predicted selling price is {:,} kr'.format(output))
 
 
 #When the Python interpreter reads a source file, it first defines a few special variables. 
