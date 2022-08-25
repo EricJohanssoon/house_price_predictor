@@ -35,7 +35,7 @@ def retrieve_data(url):
     soup = BeautifulSoup(html_page.text, 'html.parser')
     select_left = soup.find('div', class_="_2IyrD _36W0F _16dH_")
     select_right = soup.find('div', class_="_36W0F mz1O4")
-
+    print(soup)
     name = select_left.find('h1').text
     size_and_area = select_left.findAll('h4')
     size = size_and_area[0].text
