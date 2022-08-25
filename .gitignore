@@ -1,0 +1,5 @@
+#ignore aws folder
+/aws
+
+# ignore Mac system files
+.DS_store
