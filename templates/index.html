@@ -23,7 +23,10 @@
       <!-- Action is where the data is sent. In our case, predict page.
       If action is omitted, it assumed to be the current page -->
       <form action="{{ url_for('predict')}}"method="post"class="search-bar">
-        <input type="text" name="hemnet link" placeholder="Paste link from Booli" required="required" class="searchTerm" /><br>
+        <input type="text" name="hemnet link" placeholder="Paste link from Booli" 
+        oninvalid="setCustomValidity('Please enter a link from booli in the format https..booli.se/annons/...')" 
+        required="required" class="searchTerm" required pattern="https?://.+" 
+        onchange="try{setCustomValidity('')}catch(e){}" /><br>
           <button type="submit" class="searchButton"> Press here:)</button></p>
       </form>
 
