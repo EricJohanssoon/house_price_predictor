@@ -16,6 +16,6 @@ The model is hosted on an Amazon EC2 instance.
 #### Try out the application <a href="http://ec2-16-170-219-39.eu-north-1.compute.amazonaws.com:8080/" target="_blank">here</a>!
 
 ## Prints from application <br>
-<a href="static/sample_1.png" target="_blank">here</a>
-<a href="static/sample_2.png" target="_blank">here</a>
+<img src="static/sample_1.png" alt="Italian Trulli">
+<img src="static/sample_2.png" alt="Italian Trulli">
 
