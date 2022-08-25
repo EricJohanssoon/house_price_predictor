@@ -89,7 +89,7 @@ def predict():
     #print(output[0], type(output[0]))
     #output = round(prediction[0], 2)
 
-    return render_template('index.html', apartment_info='The apartment is located in {}'.format(name), prediction_text='and the predicted selling price is {:,} kr'.format(output))
+    return render_template('index.html', apartment_info='The apartment is located in {} and the predicted selling price is:'.format(name), prediction_text=' {:,} kr'.format(output))
 
 
 if __name__ == "__main__":

@@ -6,11 +6,13 @@
     <!-- Make it compatible to mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-      h1 {text-align: center;font-family: Helvetica; padding-top: 2em; padding-bottom: 1em;}
+      h1 {text-align: center;font-family: Helvetica; padding-top: 2em; padding-bottom: 0em;}
+      h2 {text-align: center;font-family: Helvetica;}
       h4 {text-align: center;font-family: Helvetica}
       p {text-align: center;font-family: Helvetica}
     </style>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='icons8-house-emoji-32.png') }}">
     <!-- <link rel="stylesheet" href="../static/styles.css"> -->
     <title>House Price Prediction</title>
     
@@ -18,12 +20,13 @@
 
   <body style="background: #000;">
   <div class="login">
-    <h1 style="color:rgb(255, 255, 255);">House Price Prediction</h1>
+    <h1 style="color:rgb(255, 255, 255);">House Price Predictor</h1>
+    <h4 style="color:rgb(255, 255, 255);">Predict the price of an apartment in Stockholm<br><br></h4>
 
       <!-- Action is where the data is sent. In our case, predict page.
       If action is omitted, it assumed to be the current page -->
       <form action="{{ url_for('predict')}}"method="post"class="search-bar">
-        <input type="text" name="hemnet link" placeholder="Paste link from Booli" 
+        <input type="text" name="hemnet link" placeholder="Please enter a link from an apartment for sale on Booli" 
         oninvalid="setCustomValidity('Please enter a link from booli in the format https..booli.se/annons/...')" 
         required="required" class="searchTerm" required pattern="https?://.+" 
         onchange="try{setCustomValidity('')}catch(e){}" /><br>
@@ -34,11 +37,11 @@
     <br>
     <h4 style="color:rgb(255, 255, 255);">
       {{ apartment_info }} </h4>
-    <h4 style="color:rgb(255, 255, 255);">
+    <h2 style="color:rgb(255, 255, 255);">
     {{ prediction_text }} </h4>
     <h4 style="color:rgb(255, 255, 255);">
     Learn more about this project on my
-      <a href="https://github.com/EricJohanssoon" class="button-20"> Github </a>
+      <a href="https://github.com/EricJohanssoon/house_price_predictor" class="button-20"> Github </a>
   
     </h4>
 
